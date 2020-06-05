@@ -6,7 +6,10 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class FileSystemVisitor implements FileVisitor<Path>{
+import com.github.bcopy.revealing.model.Category;
+import com.github.bcopy.revealing.visitor.Visitor;
+
+public class FileSystemVisitor implements FileVisitor<Path>, Visitor<Path>{
 
     @Override
     public FileVisitResult postVisitDirectory(Path arg0, IOException arg1) throws IOException {
@@ -29,6 +32,12 @@ public class FileSystemVisitor implements FileVisitor<Path>{
     @Override
     public FileVisitResult visitFileFailed(Path arg0, IOException arg1) throws IOException {
         // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Category process(Path arg) {
+        // For each provided path, perform a visit
         return null;
     }
 
