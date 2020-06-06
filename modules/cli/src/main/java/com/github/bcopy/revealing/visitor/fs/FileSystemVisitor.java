@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import com.github.bcopy.revealing.model.Category;
+import com.github.bcopy.revealing.model.Slideshow;
+import com.github.bcopy.revealing.visitor.Cursor;
 import com.github.bcopy.revealing.visitor.Visitor;
 
 public class FileSystemVisitor implements FileVisitor<Path>, Visitor<Path>{
@@ -36,9 +38,15 @@ public class FileSystemVisitor implements FileVisitor<Path>, Visitor<Path>{
     }
 
     @Override
-    public Category process(Path arg) {
-        // For each provided path, perform a visit
-        return null;
+    public void process(Cursor cursor, Path arg) {
+        // Initial condition 
+    	if(cursor.getCurrentSlideshow() == null) {
+    		Slideshow s = new Slideshow();
+    		cursor.setCurrentSlideshow(s);
+    		cursor.getSlideshows().add(s);
+    		//s.setName(arg.getFileName());
+    	}
+    	
     }
 
 }
