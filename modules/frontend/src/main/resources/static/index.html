@@ -14,17 +14,26 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h2>{{title}}</h2>
-          <aside class="notes"></aside>
+          <h2>Simple Slideshow</h2>
+          <aside class="notes">Some notes</aside>
         </section>
 
         <section data-markdown="index.md"></section>
+        <section>Single Horizontal Slide</section>
+        <section id="blank"></section>
       </div>
     </div>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/reveal.js/dist/reveal.js"></script>
 
     <script>
+        function newslide(i){
+	      // wrap the new content in the blank
+	      $('<em>Slide added'+i+'</em>').appendTo(deck)
+	                          .wrap( wrap );
+	    };
+    
+    
       Reveal.configure({
         transition: 'none',
         history: 'true',
@@ -35,6 +44,22 @@
           {src: '/webjars/reveal.js/plugin/notes/notes.js', async: true},
         ],
       });
+      
+      //slide deck wrapper
+        deck = $('#blank').parent();
+      
+        // a blank is initialized and stored as a variable
+        wrap = $('#blank').clone()
+                          .attr('id',null)
+                          .prop('outerHTML');
+        // remove the blank
+        $('#blank').remove();
+      
+        // add some slides
+        newslide(1);   
+        newslide(2);
+        newslide('Woop,woop');
+        Reveal.sync();
     </script>
   </body>
 </html>
