@@ -1,7 +1,8 @@
-package com.github.bcopy.revealing.visitor;
+package com.github.bcopy.revealing.process;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Item;
@@ -18,6 +19,8 @@ public class Cursor {
    Slideshow currentSlideshow;
    Category currentCategory;
    Item currentItem;
+   
+   AtomicInteger hierarchyLevel;
    
    List<Slideshow> slideshows = new ArrayList<>();
    

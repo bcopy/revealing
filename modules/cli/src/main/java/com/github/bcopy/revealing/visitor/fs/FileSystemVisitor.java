@@ -7,44 +7,78 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import com.github.bcopy.revealing.model.Category;
+import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
-import com.github.bcopy.revealing.visitor.Cursor;
-import com.github.bcopy.revealing.visitor.Visitor;
+import com.github.bcopy.revealing.process.Cursor;
+import com.github.bcopy.revealing.process.Processor;
 
-public class FileSystemVisitor implements FileVisitor<Path>, Visitor<Path>{
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+public class FileSystemVisitor implements FileVisitor<Path>, Processor<Path>{
+
+	Cursor cursor;
+	
     @Override
-    public FileVisitResult postVisitDirectory(Path arg0, IOException arg1) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public FileVisitResult postVisitDirectory(Path path, IOException arg1) throws IOException {
+    	cursor.getHierarchyLevel().decrementAndGet();
+        return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult preVisitDirectory(Path arg0, BasicFileAttributes arg1) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes arg1) throws IOException {
+    	
+        // Create a new category
+    	Category c = new Category();
+    	
+    	// Link parent and child if a category is being assembled.
+    	if(cursor.getHierarchyLevel().intValue() > 0 && cursor.getCurrentCategory()!=null) {
+    		c.setParent(cursor.getCurrentCategory());
+    		cursor.getCurrentCategory().getChildCategories().add(c);
+    	}
+    	cursor.setCurrentCategory(c);
+    	cursor.getCurrentSlideshow().getCategories().add(c);
+    	cursor.getHierarchyLevel().incrementAndGet();
+    	c.setName(path.getFileName().toString());
+    	return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFile(Path arg0, BasicFileAttributes arg1) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public FileVisitResult visitFile(Path path, BasicFileAttributes fileAttr) throws IOException {
+        if(fileAttr.isRegularFile()) {
+	    	// Create a new item
+	    	Item i = new Item();
+	    	
+	    	cursor.setCurrentItem(i);
+	    	
+	    	i.setName(path.getFileName().toString());
+	    	i.setAbsolutePath(path.toString());
+	    	i.setRelativePath(path.getFileName().toString());
+	    	i.setCreated(fileAttr.creationTime().toMillis());
+	    	i.setModified(fileAttr.lastModifiedTime().toMillis());
+	    	
+	    	cursor.getCurrentCategory().getItems().add(i);
+        }
+        
+    	return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path arg0, IOException arg1) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public FileVisitResult visitFileFailed(Path path, IOException exception) throws IOException {
+        // What to do in case of failure ?
+    	log.error("Ignoring file : Could not visit {} : {}", path.toString(), exception.getMessage(), exception);
+    	return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public void process(Cursor cursor, Path arg) {
+    public void process(Cursor cursor, Path path) {
+    	this.cursor = cursor;
         // Initial condition 
-    	if(cursor.getCurrentSlideshow() == null) {
+    	if(this.cursor.getCurrentSlideshow() == null) {
     		Slideshow s = new Slideshow();
-    		cursor.setCurrentSlideshow(s);
-    		cursor.getSlideshows().add(s);
-    		//s.setName(arg.getFileName());
+    		this.cursor.setCurrentSlideshow(s);
+    		this.cursor.getSlideshows().add(s);
+    		s.setName(path.getFileName().toString());
     	}
     	
     }

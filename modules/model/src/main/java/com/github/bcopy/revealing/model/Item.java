@@ -10,4 +10,10 @@ public class Item {
    String absolutePath;
    String relativePath;
    
+   Long created;
+   Long modified;
+   
+   String creator;
+   String modificator;
+   
 }

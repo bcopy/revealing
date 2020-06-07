@@ -1,5 +1,7 @@
 package com.github.bcopy.revealing.model;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -10,4 +12,7 @@ public class Category {
    Long modified;
    
    Category parent;
+   
+   List<Category> childCategories;
+   List<Item> items;
 }
