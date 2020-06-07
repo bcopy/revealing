@@ -1,4 +1,4 @@
-package com.github.bcopy.revealing.visitor.fs;
+package com.github.bcopy.revealing.process.fs;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -8,18 +8,20 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Item;
-import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.Cursor;
-import com.github.bcopy.revealing.process.Processor;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FileSystemVisitor implements FileVisitor<Path>, Processor<Path>{
+public class FileSystemVisitor implements FileVisitor<Path>{
+	private Cursor cursor;
 
-	Cursor cursor;
+	public FileSystemVisitor(Cursor cursor) {
+		this.cursor = cursor;
+	}
 	
-    @Override
+	
+	@Override
     public FileVisitResult postVisitDirectory(Path path, IOException arg1) throws IOException {
     	cursor.getHierarchyLevel().decrementAndGet();
         return FileVisitResult.CONTINUE;
@@ -70,17 +72,6 @@ public class FileSystemVisitor implements FileVisitor<Path>, Processor<Path>{
     	return FileVisitResult.CONTINUE;
     }
 
-    @Override
-    public void process(Cursor cursor, Path path) {
-    	this.cursor = cursor;
-        // Initial condition 
-    	if(this.cursor.getCurrentSlideshow() == null) {
-    		Slideshow s = new Slideshow();
-    		this.cursor.setCurrentSlideshow(s);
-    		this.cursor.getSlideshows().add(s);
-    		s.setName(path.getFileName().toString());
-    	}
-    	
-    }
+   
 
 }

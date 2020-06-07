@@ -1,6 +1,7 @@
 package com.github.bcopy.revealing.process;
 
+import com.github.bcopy.revealing.model.Slideshow;
 
 public interface Processor<T> {
-    void process(Cursor cursor, T arg);
+    Slideshow process(T arg);
 }
