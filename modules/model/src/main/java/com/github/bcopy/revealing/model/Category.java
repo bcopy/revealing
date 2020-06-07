@@ -1,5 +1,6 @@
 package com.github.bcopy.revealing.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -13,6 +14,5 @@ public class Category {
    
    Category parent;
    
-   List<Category> childCategories;
-   List<Item> items;
+   List<Item> items = new ArrayList<>();
 }

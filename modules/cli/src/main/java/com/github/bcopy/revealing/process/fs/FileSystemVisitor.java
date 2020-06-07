@@ -30,18 +30,19 @@ public class FileSystemVisitor implements FileVisitor<Path>{
     @Override
     public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes arg1) throws IOException {
     	
-        // Create a new category
-    	Category c = new Category();
-    	
     	// Link parent and child if a category is being assembled.
-    	if(cursor.getHierarchyLevel().intValue() > 0 && cursor.getCurrentCategory()!=null) {
-    		c.setParent(cursor.getCurrentCategory());
-    		cursor.getCurrentCategory().getChildCategories().add(c);
+    	if(cursor.getHierarchyLevel().intValue() > 0) {
+    		// Create a new category
+        	Category category = new Category();
+        	
+    		// Push the new category on top of the stack
+    		cursor.setCurrentCategory(category);
+    		category.setName(path.getFileName().toString());
+        	cursor.getCurrentSlideshow().getCategories().add(category);
     	}
-    	cursor.setCurrentCategory(c);
-    	cursor.getCurrentSlideshow().getCategories().add(c);
+    	
     	cursor.getHierarchyLevel().incrementAndGet();
-    	c.setName(path.getFileName().toString());
+    	
     	return FileVisitResult.CONTINUE;
     }
 

@@ -1,6 +1,16 @@
-# revealing
-A full screen presentation facility prototype
+# Revealing
+
+A full screen presentation facility prototype, based on reveal.js.
+
+Uses :
+* The fantastic [reveal.js](https://revealjs.com/) presentation framework and its awesome community.
+* [rclone](https://rclone.org/) - for cloud synchronization
+* [Google JIMFS](https://github.com/google/jimfs) for file system unit testing
+
+
 # Getting Started
+
+This project uses Apache Maven and Spring Boot for productivity.
 
 ### Reference Documentation
 For further reference, please consider the following sections:
@@ -10,11 +20,4 @@ For further reference, please consider the following sections:
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/maven-plugin/reference/html/#build-image)
 * [Spring Web](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/htmlsingle/#boot-features-developing-web-applications)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/htmlsingle/#using-boot-devtools)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 

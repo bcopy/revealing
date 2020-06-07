@@ -20,7 +20,7 @@ public class Cursor {
    Category currentCategory;
    Item currentItem;
    
-   AtomicInteger hierarchyLevel;
+   AtomicInteger hierarchyLevel = new AtomicInteger();
    
    List<Slideshow> slideshows = new ArrayList<>();
    
