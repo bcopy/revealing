@@ -1,5 +1,8 @@
 # Revealing
 
+[![GitHub Actions Status](https://github.com/bcopy/revealing/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/bcopy/revealing/actions)
+[![Java 11](https://img.shields.io/badge/Java-11-purple "Java 11")](https://java.com)
+
 A full screen presentation facility prototype, based on reveal.js.
 
 Uses :
