@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/webjars/reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="/webjars/reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="/webjars/reveal.js/dist/theme/black.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>{{title}}</h2>
+          <aside class="notes"></aside>
+        </section>
+
+        <section data-markdown="index.md"></section>
+      </div>
+    </div>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/reveal.js/dist/reveal.js"></script>
+
+    <script>
+      Reveal.configure({
+        transition: 'none',
+        history: 'true',
+      });
+      Reveal.initialize({
+        dependencies: [
+          {src: '/webjars/reveal.js/plugin/markdown/markdown.js'},
+          {src: '/webjars/reveal.js/plugin/notes/notes.js', async: true},
+        ],
+      });
+    </script>
+  </body>
+</html>

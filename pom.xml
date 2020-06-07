@@ -50,6 +50,7 @@
 	<modules>
 	  <module>modules/model</module>
 	  <module>modules/cli</module>
+	  <module>modules/frontend</module>
 	</modules>
 
 </project>
