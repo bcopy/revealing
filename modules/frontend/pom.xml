@@ -48,6 +48,12 @@
             <artifactId>jquery</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>hybind</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        
 	</dependencies>
 
 	<build>

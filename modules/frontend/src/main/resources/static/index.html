@@ -24,9 +24,21 @@
       </div>
     </div>
     <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/hybind/index.js"></script>
     <script src="/webjars/reveal.js/dist/reveal.js"></script>
 
     <script>
+	    var dataApi = hybind("/data");
+	    var slideshows = [];
+	    
+	    var slideShowCache = {};
+		dataApi.$bind("slideshows", slideshows).$load().then(
+			function() {
+				that.slideshows.forEach(function(slideshow) {
+					slideshow.$share(slideShowCache);
+				});
+			});
+	    
         function newslide(i){
 	      // wrap the new content in the blank
 	      $('<em>Slide added'+i+'</em>').appendTo(deck)
