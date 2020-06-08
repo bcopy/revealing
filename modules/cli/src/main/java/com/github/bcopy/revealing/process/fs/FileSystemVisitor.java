@@ -1,5 +1,9 @@
 package com.github.bcopy.revealing.process.fs;
 
+import static com.drew.metadata.exif.ExifDirectoryBase.TAG_DATETIME_ORIGINAL;
+import static com.drew.metadata.exif.ExifDirectoryBase.TAG_IMAGE_DESCRIPTION;
+import static com.drew.metadata.exif.ExifDirectoryBase.TAG_USER_COMMENT;
+
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -13,11 +17,6 @@ import com.drew.imaging.jpeg.JpegSegmentMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
-import static com.drew.metadata.exif.ExifSubIFDDirectory.*;
-import static com.drew.metadata.jpeg.JpegDirectory.*;
-
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.process.Cursor;
@@ -88,7 +87,6 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 				if (log.isWarnEnabled()) {
 					log.warn("Could not extract metadata from '{}'", path.toString(), ex);
 				}
-
 			}
 
 			cursor.getCurrentCategory().getItems().add(i);
