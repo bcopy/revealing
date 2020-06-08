@@ -18,14 +18,27 @@
           <aside class="notes">Some notes</aside>
         </section>
 
-        <section data-markdown="index.md"></section>
-        <section>Single Horizontal Slide</section>
+        <section>
+          <h2>Puppies</h2>
+		  <section data-background-image="images/pug.jpg" data-background-size="contain">Pug</section>
+          <section data-background-image="images/rope.jpg" data-background-size="contain">Rope</section>
+          <section data-background-image="images/white_puppies.jpg" data-background-size="contain">White Puppies</section>
+        </section>
+        
+        <section>
+          <h2>Other drugs</h2>
+		  <section data-background-image="images/pug.jpg" data-background-size="contain">Pug</section>
+          <section data-background-image="images/rope.jpg" data-background-size="contain">Rope</section>
+          <section data-background-image="images/white_puppies.jpg" data-background-size="contain">White Puppies</section>
+        </section>
+        
         <section id="blank"></section>
       </div>
     </div>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/hybind/index.js"></script>
     <script src="/webjars/reveal.js/dist/reveal.js"></script>
+    <script src="/webjars/reveal.js/plugin/markdown/markdown.js"></script>
 
     <script>
 	    var dataApi = hybind("/data");
@@ -41,7 +54,7 @@
 	    
         function newslide(i){
 	      // wrap the new content in the blank
-	      $('<em>Slide added'+i+'</em>').appendTo(deck)
+	      $('<em>Slide added '+i+' </em>').appendTo(deck)
 	                          .wrap( wrap );
 	    };
     
@@ -51,8 +64,10 @@
         history: 'true',
       });
       Reveal.initialize({
+        autoSlide: 2000,
+        loop: true,
+        plugins: [ RevealMarkdown ],
         dependencies: [
-          {src: '/webjars/reveal.js/plugin/markdown/markdown.js'},
           {src: '/webjars/reveal.js/plugin/notes/notes.js', async: true},
         ],
       });
@@ -71,7 +86,6 @@
         newslide(1);   
         newslide(2);
         newslide('Woop,woop');
-        Reveal.sync();
     </script>
   </body>
 </html>
