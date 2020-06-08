@@ -77,10 +77,13 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 				Metadata metadata = JpegMetadataReader.readMetadata(path.toFile(), metadataReaders);
 				ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 				i.setCreated(directory.getDate(TAG_DATETIME_ORIGINAL).getTime());
-				String caption = Arrays.asList(directory.getString(TAG_USER_COMMENT),directory.getString(TAG_IMAGE_DESCRIPTION))
-						.stream().filter(s -> s != null).findFirst().orElse(i.getTitle());
-			    i.setCaption(caption);
-			    
+				String caption = Arrays
+						.asList(directory.getString(TAG_USER_COMMENT), directory.getString(TAG_IMAGE_DESCRIPTION))
+						.stream()
+						.filter(s -> s != null && (!s.isEmpty()))
+						.findFirst()
+						.orElse(i.getTitle());
+				i.setCaption(caption);
 			} catch (JpegProcessingException | IOException ex) {
 				if (log.isWarnEnabled()) {
 					log.warn("Could not extract metadata from '{}'", path.toString(), ex);
