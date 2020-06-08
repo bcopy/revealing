@@ -11,7 +11,7 @@ import lombok.Data;
 public class Category {
 	@Id
 	String id;
-	String name;
+	String title;
 	Long created;
 	Long modified;
 

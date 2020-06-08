@@ -10,7 +10,8 @@ import lombok.Data;
 public class Item {
 	@Id
 	String id = UUID.randomUUID().toString();
-	String name;
+	String title;
+	String caption;
 
 	String absolutePath;
 	String relativePath;
