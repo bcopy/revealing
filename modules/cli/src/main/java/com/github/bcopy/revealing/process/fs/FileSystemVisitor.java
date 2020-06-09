@@ -7,6 +7,7 @@ import static com.drew.metadata.exif.ExifDirectoryBase.TAG_USER_COMMENT;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
@@ -15,8 +16,11 @@ import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.imaging.jpeg.JpegSegmentMetadataReader;
 import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.exif.ExifImageDirectory;
 import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.drew.metadata.jpeg.JpegDirectory;
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.process.Cursor;
@@ -66,23 +70,35 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 
 			cursor.setCurrentItem(i);
 
-			i.setTitle(path.getFileName().toString().replace("_", " "));
+			i.setTitle(capitalizeString(path.getFileName().toString().replaceFirst("[.][^.]+$", "").replace("_", " ")));
 			i.setAbsolutePath(path.toString());
 			i.setRelativePath(path.getFileName().toString());
 			i.setCreated(fileAttr.creationTime().toMillis());
 			i.setModified(fileAttr.lastModifiedTime().toMillis());
 
 			try {
-				Metadata metadata = JpegMetadataReader.readMetadata(path.toFile(), metadataReaders);
-				ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-				i.setCreated(directory.getDate(TAG_DATETIME_ORIGINAL).getTime());
-				String caption = Arrays
-						.asList(directory.getString(TAG_USER_COMMENT), directory.getString(TAG_IMAGE_DESCRIPTION))
-						.stream()
-						.filter(s -> s != null && (!s.isEmpty()))
-						.findFirst()
-						.orElse(i.getTitle());
-				i.setCaption(caption);
+				Metadata metadata = JpegMetadataReader.readMetadata(Files.newInputStream(path), metadataReaders);
+				ExifIFD0Directory exifId0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+				ExifSubIFDDirectory exifSubIFDDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+				
+				// Fallback on the item title, if any is set
+				i.setCaption(i.getTitle());
+				
+				if(exifSubIFDDirectory != null) {
+					if(exifSubIFDDirectory.containsTag(TAG_DATETIME_ORIGINAL)) {
+					  i.setCreated(exifSubIFDDirectory.getDate(TAG_DATETIME_ORIGINAL).getTime());
+					}
+					if(exifSubIFDDirectory.containsTag(TAG_USER_COMMENT)) {
+					  i.setCaption(exifSubIFDDirectory.getString(TAG_USER_COMMENT));
+					}
+				}
+				if(exifId0Directory != null && exifId0Directory.containsTag(TAG_IMAGE_DESCRIPTION)) {
+					i.setCaption(exifId0Directory.getString(TAG_IMAGE_DESCRIPTION));
+				}
+				
+				if(exifSubIFDDirectory == null && exifId0Directory == null) {
+					log.info("No EXIF information : Could not extract metadata from '{}'", path.toString());
+				}
 			} catch (JpegProcessingException | IOException ex) {
 				if (log.isWarnEnabled()) {
 					log.warn("Could not extract metadata from '{}'", path.toString(), ex);
@@ -101,5 +117,19 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 		log.error("Ignoring file : Could not visit {} : {}", path.toString(), exception.getMessage(), exception);
 		return FileVisitResult.CONTINUE;
 	}
+	
+	private static final String capitalizeString(String string) {
+		  char[] chars = string.toLowerCase().toCharArray();
+		  boolean found = false;
+		  for (int i = 0; i < chars.length; i++) {
+		    if (!found && Character.isLetter(chars[i])) {
+		      chars[i] = Character.toUpperCase(chars[i]);
+		      found = true;
+		    } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+		      found = false;
+		    }
+		  }
+		  return String.valueOf(chars);
+		}
 
 }
