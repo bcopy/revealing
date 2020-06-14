@@ -11,9 +11,9 @@ A full screen presentation facility, based on reveal.js.
 
 Uses :
 * The fantastic [reveal.js](https://revealjs.com/) presentation framework and its awesome community.
-* [rclone](https://rclone.org/) - for cloud synchronization.
-* [Google JIMFS](https://github.com/google/jimfs) for file system unit testing.
-* [Chilipie kiosk](https://github.com/futurice/chilipie-kiosk) - to run in Kiosk mode on a Raspberry Pi.
+* The spectacular [rclone](https://rclone.org/) for cloud synchronization.
+* The daring [Google JIMFS](https://github.com/google/jimfs) for file system unit testing.
+* The splendid [Chilipie kiosk](https://github.com/futurice/chilipie-kiosk) to run in Kiosk mode on a Raspberry Pi.
 
 
 # Getting Started
