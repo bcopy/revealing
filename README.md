@@ -3,12 +3,17 @@
 [![Build Status](https://github.com/bcopy/revealing/workflows/Maven%20CI/badge.svg)](https://github.com/bcopy/revealing/actions)
 [![Java 11](https://img.shields.io/badge/Java-11-purple "Java 11")](https://java.com)
 
-A full screen presentation facility prototype, based on reveal.js.
+<p align="center">
+<img alt="Revealing logo" src="revealing.png">
+</p>
+
+A full screen presentation facility, based on reveal.js.
 
 Uses :
 * The fantastic [reveal.js](https://revealjs.com/) presentation framework and its awesome community.
-* [rclone](https://rclone.org/) - for cloud synchronization
-* [Google JIMFS](https://github.com/google/jimfs) for file system unit testing
+* [rclone](https://rclone.org/) - for cloud synchronization.
+* [Google JIMFS](https://github.com/google/jimfs) for file system unit testing.
+* [Chilipie kiosk](https://github.com/futurice/chilipie-kiosk) - to run in Kiosk mode on a Raspberry Pi.
 
 
 # Getting Started
