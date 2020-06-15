@@ -80,39 +80,43 @@ public class ExifMetadataVisitor implements FileVisitor<Path> {
 			i.setCreated(fileAttr.creationTime().toMillis());
 			i.setModified(fileAttr.lastModifiedTime().toMillis());
 
-			try {
-				Metadata metadata = JpegMetadataReader.readMetadata(Files.newInputStream(path), metadataReaders);
-				ExifIFD0Directory exifId0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-				ExifSubIFDDirectory exifSubIFDDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-				
-				// Fallback on the item title, if any is set
-				i.setCaption(i.getTitle());
-				
-				if(exifSubIFDDirectory != null) {
-					if(exifSubIFDDirectory.containsTag(TAG_DATETIME_ORIGINAL)) {
-					  i.setCreated(exifSubIFDDirectory.getDate(TAG_DATETIME_ORIGINAL).getTime());
-					}
-					if(exifSubIFDDirectory.containsTag(TAG_USER_COMMENT)) {
-					  i.setCaption(exifSubIFDDirectory.getString(TAG_USER_COMMENT));
-					}
-				}
-				if(exifId0Directory != null && exifId0Directory.containsTag(TAG_IMAGE_DESCRIPTION)) {
-					i.setCaption(exifId0Directory.getString(TAG_IMAGE_DESCRIPTION));
-				}
-				
-				if(exifSubIFDDirectory == null && exifId0Directory == null) {
-					log.info("No EXIF information : Could not extract metadata from '{}'", path.toString());
-				}
-			} catch (JpegProcessingException | IOException ex) {
-				if (log.isWarnEnabled()) {
-					log.warn("Could not extract metadata from '{}'", path.toString(), ex);
-				}
-			}
+			extractExifMetadata(path, i);
 
 			getCursor().getCurrentCategory().getItems().add(i);
 		}
 
 		return FileVisitResult.CONTINUE;
+	}
+
+	private void extractExifMetadata(Path path, Item i) {
+		try {
+			Metadata metadata = JpegMetadataReader.readMetadata(Files.newInputStream(path), metadataReaders);
+			ExifIFD0Directory exifId0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+			ExifSubIFDDirectory exifSubIFDDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+			
+			// Fallback on the item title, if any is set
+			i.setCaption(i.getTitle());
+			
+			if(exifSubIFDDirectory != null) {
+				if(exifSubIFDDirectory.containsTag(TAG_DATETIME_ORIGINAL)) {
+				  i.setCreated(exifSubIFDDirectory.getDate(TAG_DATETIME_ORIGINAL).getTime());
+				}
+				if(exifSubIFDDirectory.containsTag(TAG_USER_COMMENT)) {
+				  i.setCaption(exifSubIFDDirectory.getString(TAG_USER_COMMENT));
+				}
+			}
+			if(exifId0Directory != null && exifId0Directory.containsTag(TAG_IMAGE_DESCRIPTION)) {
+				i.setCaption(exifId0Directory.getString(TAG_IMAGE_DESCRIPTION));
+			}
+			
+			if(exifSubIFDDirectory == null && exifId0Directory == null) {
+				log.info("No EXIF information : Could not extract metadata from '{}'", path.toString());
+			}
+		} catch (JpegProcessingException | IOException ex) {
+			if (log.isWarnEnabled()) {
+				log.warn("Could not extract metadata from '{}'", path.toString(), ex);
+			}
+		}
 	}
 
 	@Override
