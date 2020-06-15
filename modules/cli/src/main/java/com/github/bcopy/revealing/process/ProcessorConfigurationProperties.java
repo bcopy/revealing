@@ -5,6 +5,6 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ProcessorConfiguration {
+public class ProcessorConfigurationProperties {
   private List<String> visitors;
 }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProcessorAutoConfiguration {
    @Bean
    @ConfigurationProperties("revealing.process")
-   ProcessorConfiguration processorConfiguration() {
-	   return new ProcessorConfiguration();
+   ProcessorConfigurationProperties processorConfiguration() {
+	   return new ProcessorConfigurationProperties();
    }
 }
