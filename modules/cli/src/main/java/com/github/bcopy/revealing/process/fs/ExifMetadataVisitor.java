@@ -12,15 +12,16 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
+
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.imaging.jpeg.JpegSegmentMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
-import com.drew.metadata.exif.ExifImageDirectory;
 import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.jpeg.JpegDirectory;
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.process.Cursor;
@@ -28,18 +29,21 @@ import com.github.bcopy.revealing.process.Cursor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FileSystemVisitor implements FileVisitor<Path> {
+@ConditionalOnProperty(
+		  prefix="revealing.process",
+		  name = "visitors",
+		  matchIfMissing = true,
+		  havingValue = "exif")
+@Component
+public class ExifMetadataVisitor implements FileVisitor<Path> {
+	
 	private Cursor cursor;
 
 	Iterable<JpegSegmentMetadataReader> metadataReaders = Arrays.asList(new ExifReader());
 
-	public FileSystemVisitor(Cursor cursor) {
-		this.cursor = cursor;
-	}
-
 	@Override
 	public FileVisitResult postVisitDirectory(Path path, IOException arg1) throws IOException {
-		cursor.getHierarchyLevel().decrementAndGet();
+		getCursor().getHierarchyLevel().decrementAndGet();
 		return FileVisitResult.CONTINUE;
 	}
 
@@ -47,17 +51,17 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 	public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes arg1) throws IOException {
 
 		// Link parent and child if a category is being assembled.
-		if (cursor.getHierarchyLevel().intValue() > 0) {
+		if (getCursor().getHierarchyLevel().intValue() > 0) {
 			// Create a new category
 			Category category = new Category();
 
 			// Push the new category on top of the stack
-			cursor.setCurrentCategory(category);
+			getCursor().setCurrentCategory(category);
 			category.setTitle(path.getFileName().toString());
-			cursor.getCurrentSlideshow().getCategories().add(category);
+			getCursor().getCurrentSlideshow().getCategories().add(category);
 		}
 
-		cursor.getHierarchyLevel().incrementAndGet();
+		getCursor().getHierarchyLevel().incrementAndGet();
 
 		return FileVisitResult.CONTINUE;
 	}
@@ -68,7 +72,7 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 			// Create a new item
 			Item i = new Item();
 
-			cursor.setCurrentItem(i);
+			getCursor().setCurrentItem(i);
 
 			i.setTitle(capitalizeString(path.getFileName().toString().replaceFirst("[.][^.]+$", "").replace("_", " ")));
 			i.setAbsolutePath(path.toString());
@@ -105,7 +109,7 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 				}
 			}
 
-			cursor.getCurrentCategory().getItems().add(i);
+			getCursor().getCurrentCategory().getItems().add(i);
 		}
 
 		return FileVisitResult.CONTINUE;
@@ -131,5 +135,13 @@ public class FileSystemVisitor implements FileVisitor<Path> {
 		  }
 		  return String.valueOf(chars);
 		}
+
+	public Cursor getCursor() {
+		return cursor;
+	}
+
+	public void setCursor(Cursor cursor) {
+		this.cursor = cursor;
+	}
 
 }

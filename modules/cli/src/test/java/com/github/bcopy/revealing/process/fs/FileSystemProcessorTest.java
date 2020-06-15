@@ -1,10 +1,10 @@
 package com.github.bcopy.revealing.process.fs;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
-import com.google.common.collect.ImmutableList;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 

@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileSystemProcessor implements Processor<Path> {
 	Cursor cursor;
 
-	FileSystemVisitor visitor;
+	ExifMetadataVisitor visitor;
 
 	@Override
 	public Slideshow process(Path path) {
@@ -25,7 +25,9 @@ public class FileSystemProcessor implements Processor<Path> {
 		cursor.getSlideshows().add(slideshow);
 		slideshow.setName(path.getFileName().toString());
 
-		visitor = new FileSystemVisitor(cursor);
+		visitor = new ExifMetadataVisitor();
+		visitor.setCursor(cursor);
+		
 		try {
 			Files.walkFileTree(path, visitor);
 		} catch (IOException e) {
