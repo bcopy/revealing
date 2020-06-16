@@ -27,7 +27,4 @@ public class ProcessorAutoConfiguration implements ApplicationContextAware {
 	   return new ProcessorConfigurationProperties();
    }
    
-   Map<String, Processor> getProcessorBeans(){
-	  return applicationContext.getBeansOfType(Processor.class);
-   }
 }

@@ -35,9 +35,19 @@ import lombok.extern.slf4j.Slf4j;
 		  matchIfMissing = true,
 		  havingValue = "exif")
 @Component
-public class ExifMetadataVisitor implements FileVisitor<Path> {
+public class ExifMetadataVisitorFactory implements FileVisitorFactory {
+	
+  public FileVisitor<Path> getInstance(Cursor cursor){
+	  return new ExifMetadataVisitor(cursor);
+  }
+
+  public class ExifMetadataVisitor implements FileVisitor<Path> {
 	
 	private Cursor cursor;
+	
+	public ExifMetadataVisitor(Cursor cursor) {
+		this.cursor = cursor;
+	}
 
 	Iterable<JpegSegmentMetadataReader> metadataReaders = Arrays.asList(new ExifReader());
 
@@ -126,6 +136,13 @@ public class ExifMetadataVisitor implements FileVisitor<Path> {
 		return FileVisitResult.CONTINUE;
 	}
 	
+
+
+	public Cursor getCursor() {
+		return cursor;
+	}
+  }
+  
 	private static final String capitalizeString(String string) {
 		  char[] chars = string.toLowerCase().toCharArray();
 		  boolean found = false;
@@ -139,13 +156,5 @@ public class ExifMetadataVisitor implements FileVisitor<Path> {
 		  }
 		  return String.valueOf(chars);
 		}
-
-	public Cursor getCursor() {
-		return cursor;
-	}
-
-	public void setCursor(Cursor cursor) {
-		this.cursor = cursor;
-	}
 
 }

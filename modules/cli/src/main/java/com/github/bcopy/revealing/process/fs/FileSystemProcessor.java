@@ -1,9 +1,10 @@
 package com.github.bcopy.revealing.process.fs;
 
 import java.io.IOException;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
 import com.github.bcopy.revealing.process.Cursor;
 import com.github.bcopy.revealing.process.Processor;
@@ -12,8 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FileSystemProcessor implements Processor<Path> {
-	ExifMetadataVisitor visitor;
-
+	
+	List<FileVisitorFactory> visitorFactories;
+	
+	public FileSystemProcessor(List<FileVisitorFactory> visitorFactories) {
+		this.visitorFactories = visitorFactories;
+	}
+	
 	@Override
 	public Cursor process(Cursor cursor, Path... paths) {
 		
@@ -22,14 +28,15 @@ public class FileSystemProcessor implements Processor<Path> {
 			
 			cursor.setOrCreateSlideshow(slideshowName);
 
-			visitor = new ExifMetadataVisitor();
-			visitor.setCursor(cursor);
-			
-			try {
-				Files.walkFileTree(path, visitor);
-			} catch (IOException e) {
-				log.error(e.getMessage(), e);
+			for (FileVisitorFactory visitorFactory : visitorFactories) {
+				FileVisitor<Path> visitor = visitorFactory.getInstance(cursor);
+				try {
+					Files.walkFileTree(path, visitor);
+				} catch (IOException e) {
+					log.error(e.getMessage(), e);
+				}
 			}
+			
 		}
 		
 		return cursor;

@@ -42,7 +42,7 @@ class FileSystemProcessorTest {
 			});
 		}
 		
-		FileSystemProcessor fsp = new FileSystemProcessor();
+		FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new ExifMetadataVisitorFactory()));
 		Cursor c = new Cursor();
 		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
 		
