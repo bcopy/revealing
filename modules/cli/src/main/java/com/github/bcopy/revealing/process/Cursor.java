@@ -1,7 +1,9 @@
 package com.github.bcopy.revealing.process;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.bcopy.revealing.model.Category;
@@ -23,5 +25,20 @@ public class Cursor {
    AtomicInteger hierarchyLevel = new AtomicInteger();
    
    List<Slideshow> slideshows = new ArrayList<>();
+   
+   Map<String, Slideshow> slideshowsMap = new HashMap<>();
+   
+   public void setOrCreateSlideshow(String name) {
+	   currentSlideshow = getOrCreateSlideshowByName(name);
+   }
+   public Slideshow getOrCreateSlideshowByName(String name){
+	  return slideshowsMap.computeIfAbsent(name, key -> {
+		  Slideshow slideShow = new Slideshow();
+		  slideShow.setName(key);
+		  slideshows.add(slideShow);
+		  
+		  return slideShow;
+	  });
+   }
    
 }

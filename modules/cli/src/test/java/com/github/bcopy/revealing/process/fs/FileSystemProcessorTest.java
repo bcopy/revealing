@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
+import com.github.bcopy.revealing.process.Cursor;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 
@@ -35,7 +36,6 @@ class FileSystemProcessorTest {
 			Arrays.asList("blue","red","white","black").stream().forEach(color ->{
 				try {
 					Files.copy(FileSystemProcessorTest.class.getResourceAsStream("/"+color+".jpg"), path.resolve(color+index+".jpg"), StandardCopyOption.REPLACE_EXISTING);
-//					System.out.println(is.markSupported());
 				} catch (IOException e) {
 					fail("Could not copy test image "+color);
 				}
@@ -43,7 +43,8 @@ class FileSystemProcessorTest {
 		}
 		
 		FileSystemProcessor fsp = new FileSystemProcessor();
-		Slideshow slideshow = fsp.process(rootPath);
+		Cursor c = new Cursor();
+		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
 		
 		assertEquals(5, slideshow.getCategories().size());
 		Optional<Item> redItem = slideshow.getCategories().get(0).getItems().stream().filter(item -> item.getTitle().equals("Red1")).findFirst();

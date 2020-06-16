@@ -110,7 +110,7 @@ public class ExifMetadataVisitor implements FileVisitor<Path> {
 			}
 			
 			if(exifSubIFDDirectory == null && exifId0Directory == null) {
-				log.info("No EXIF information : Could not extract metadata from '{}'", path.toString());
+				log.debug("No EXIF information : Could not extract metadata from '{}'", path.toString());
 			}
 		} catch (JpegProcessingException | IOException ex) {
 			if (log.isWarnEnabled()) {
