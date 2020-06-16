@@ -10,16 +10,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="60.151192mm"
-   height="60.151192mm"
-   viewBox="0 0 60.151191 60.151191"
+   width="60mm"
+   height="60mm"
+   viewBox="0 0 59.999999 59.999999"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="revealing.svg"
    inkscape:export-filename="/home/brice/workspace-personal/revealing/revealing.png"
-   inkscape:export-xdpi="125.9485"
-   inkscape:export-ydpi="125.9485">
+   inkscape:export-xdpi="126.45769"
+   inkscape:export-ydpi="126.45769">
   <defs
      id="defs2">
     <linearGradient
@@ -77,8 +77,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.6019127"
-     inkscape:cx="159.52467"
-     inkscape:cy="140.03749"
+     inkscape:cx="162.36946"
+     inkscape:cy="60.477732"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -90,7 +90,8 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     units="mm" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -99,28 +100,37 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Backdrop"
+     style="display:inline">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.5247854;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect1727"
+       width="60"
+       height="60"
+       x="-1.5894572e-07"
+       y="0"
+       inkscape:export-xdpi="127"
+       inkscape:export-ydpi="127" />
+  </g>
+  <g
+     inkscape:label="Icon"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-6.5280342,-6.9686317)">
-    <rect
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
-       id="rect1727"
-       width="60.500916"
-       height="60.500916"
-       x="6.2948899"
-       y="6.7354794" />
+     transform="translate(-6.5280342,-7.1198234)"
+     style="display:inline">
     <circle
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.52103412;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#ff0909;stroke-width:0.51451302;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        id="circle997"
-       cx="36.60363"
-       cy="37.044228"
-       r="29.613375" />
+       cx="36.477707"
+       cy="37.090824"
+       r="29.242743" />
     <circle
        style="opacity:1;fill:url(#linearGradient1146);fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        id="path817"
@@ -128,13 +138,13 @@
        cy="37.044228"
        r="30.0756"
        clip-path="none"
-       transform="translate(-0.04121446,-0.28187993)"
+       transform="matrix(0.97295136,0,0,1,0.79007855,-0.90954174)"
        mask="url(#mask1552)" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot819"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#ff0909;fill-opacity:1;stroke:none"
-       transform="matrix(1.5784441,0,0,1.5784441,-100.90925,-131.64649)"><flowRegion
+       transform="matrix(1.5766064,0,0,1.5466561,-100.90293,-127.98063)"><flowRegion
          id="flowRegion821"
          style="fill:#ff0909;fill-opacity:1"><rect
            id="rect823"
