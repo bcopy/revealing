@@ -77,7 +77,7 @@ class FileSystemProcessorTest {
 
 	
 	private static final Path initializeTestFileSystem() throws IOException {
-		FileSystem fs = Jimfs.newFileSystem(Configuration.unix());
+		FileSystem fs = Jimfs.newFileSystem();
 		
 	    Path rootPath = fs.getPath("/home", "user1", "slideshows");
 	    Files.createDirectories(rootPath);
