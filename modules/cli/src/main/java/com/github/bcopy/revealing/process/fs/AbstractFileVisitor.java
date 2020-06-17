@@ -7,8 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import com.github.bcopy.revealing.model.Category;
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Slideshow;
-import com.github.bcopy.revealing.process.Cursor;
 
 import lombok.extern.slf4j.Slf4j;
 

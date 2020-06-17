@@ -3,7 +3,7 @@ package com.github.bcopy.revealing.process.fs.exif;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import com.github.bcopy.revealing.process.Cursor;
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
 import com.github.bcopy.revealing.process.fs.FileVisitorFactory;
 

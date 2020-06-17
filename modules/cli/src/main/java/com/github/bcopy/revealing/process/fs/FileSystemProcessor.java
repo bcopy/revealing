@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.github.bcopy.revealing.process.Cursor;
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.process.Processor;
 
 import lombok.extern.slf4j.Slf4j;

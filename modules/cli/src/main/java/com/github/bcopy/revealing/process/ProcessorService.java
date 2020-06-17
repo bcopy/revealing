@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.fs.FileSystemProcessor;
 

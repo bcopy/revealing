@@ -18,8 +18,8 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Item;
-import com.github.bcopy.revealing.process.Cursor;
 import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
 import com.github.bcopy.revealing.process.fs.Utils;
 

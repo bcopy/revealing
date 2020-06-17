@@ -4,8 +4,8 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Item;
-import com.github.bcopy.revealing.process.Cursor;
 import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
 
 /**

@@ -4,7 +4,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.github.bcopy.revealing.process.Cursor;
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
 import com.github.bcopy.revealing.process.fs.FileVisitorFactory;
 
