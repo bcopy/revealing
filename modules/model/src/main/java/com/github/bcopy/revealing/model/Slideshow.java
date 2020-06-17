@@ -1,6 +1,8 @@
 package com.github.bcopy.revealing.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,12 +16,15 @@ public class Slideshow {
 	String id = UUID.randomUUID().toString();
 	String name;
 
-	Map<String, Category> categories = new HashMap<>();
+	Map<String, Category> categoriesMap = new HashMap<>();
+	
+	List<Category> categories = new ArrayList<>();
 
 	public Category getOrCreateCategoryByName(String name) {
-		return categories.computeIfAbsent(name, key -> {
+		return categoriesMap.computeIfAbsent(name, key -> {
 			Category category = new Category();
 			category.setTitle(name);
+			categories.add(category);
 			return category;
 		});
 	}

@@ -28,8 +28,9 @@ public class Cursor {
    
    Map<String, Slideshow> slideshowsMap = new HashMap<>();
    
-   public void setOrCreateSlideshow(String name) {
+   public Cursor setOrCreateSlideshow(String name) {
 	   currentSlideshow = getOrCreateSlideshowByName(name);
+	   return this;
    }
    public Slideshow getOrCreateSlideshowByName(String name){
 	  return slideshowsMap.computeIfAbsent(name, key -> {
@@ -41,16 +42,18 @@ public class Cursor {
 	  });
    }
    
-   public void setOrCreateCategoryInCurrentSlideshow(String name) {
+   public Cursor setOrCreateCategoryInCurrentSlideshow(String name) {
 	   currentCategory = getOrCreateCategoryInCurrentSlideshowByName(name);
+	   return this;
    }
 
    public Category getOrCreateCategoryInCurrentSlideshowByName(String name){
 	  return currentSlideshow.getOrCreateCategoryByName(name);
    }
    
-   public void setOrCreateItemInCurrentCategory(String name) {
+   public Cursor setOrCreateItemInCurrentCategory(String name) {
 	   currentItem = getOrCreateItemInCurrentCategoryByName(name);
+	   return this;
    }
 
    public Item getOrCreateItemInCurrentCategoryByName(String name){
