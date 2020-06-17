@@ -1,14 +1,10 @@
-package com.github.bcopy.revealing.process;
+package com.github.bcopy.revealing.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.github.bcopy.revealing.model.Category;
-import com.github.bcopy.revealing.model.Item;
-import com.github.bcopy.revealing.model.Slideshow;
 
 import lombok.Data;
 
