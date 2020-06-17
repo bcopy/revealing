@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= slideshow.title
+    meta (http-equiv="Content-Type",content="text/html",charset="utf-8")
+    link (rel="stylesheet", href="dist/reveal.css")
+    link (rel="stylesheet", href="dist/theme/white.css")
+    link (rel="stylesheet", href="css/photo-gallery.css")
+  body
+    .reveal
+      .slides
+        each category in slideshow.categories
+          section= category.title
+            each item in category.items
+              section(data-background-image="#{item.relativePath}",data-background-position="center") {item.caption}
+        script (src="dist/reveal.js")
+        script Reveal.initialize();
+    
+  
