@@ -1,7 +1,7 @@
 package com.github.bcopy.revealing.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 
@@ -17,5 +17,13 @@ public class Category {
 
 	Category parent;
 
-	List<Item> items = new ArrayList<>();
+	Map<String, Item> items = new HashMap<>();
+
+	public Item getOrCreateItemByName(String name) {
+		return items.computeIfAbsent(name, key -> {
+			Item item = new Item();
+			item.setTitle(name);
+			return item;
+		});
+	}
 }

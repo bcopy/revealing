@@ -41,4 +41,22 @@ public class Cursor {
 	  });
    }
    
+   public void setOrCreateCategoryInCurrentSlideshow(String name) {
+	   currentCategory = getOrCreateCategoryInCurrentSlideshowByName(name);
+   }
+
+   public Category getOrCreateCategoryInCurrentSlideshowByName(String name){
+	  return currentSlideshow.getOrCreateCategoryByName(name);
+   }
+   
+   public void setOrCreateItemInCurrentCategory(String name) {
+	   currentItem = getOrCreateItemInCurrentCategoryByName(name);
+   }
+
+   public Item getOrCreateItemInCurrentCategoryByName(String name){
+		  return currentCategory.getOrCreateItemByName(name);
+	   }
+	   
+
+   
 }

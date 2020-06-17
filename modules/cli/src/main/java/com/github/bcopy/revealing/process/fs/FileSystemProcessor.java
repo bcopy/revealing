@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileSystemProcessor implements Processor<Path> {
 	
-	List<FileVisitorFactory> visitorFactories;
+	List<FileVisitorFactory<AbstractFileVisitor>> visitorFactories;
 	
-	public FileSystemProcessor(List<FileVisitorFactory> visitorFactories) {
+	public FileSystemProcessor(List<FileVisitorFactory<AbstractFileVisitor>> visitorFactories) {
 		this.visitorFactories = visitorFactories;
 	}
 	
@@ -28,7 +28,7 @@ public class FileSystemProcessor implements Processor<Path> {
 			
 			cursor.setOrCreateSlideshow(slideshowName);
 
-			for (FileVisitorFactory visitorFactory : visitorFactories) {
+			for (FileVisitorFactory<AbstractFileVisitor> visitorFactory : visitorFactories) {
 				FileVisitor<Path> visitor = visitorFactory.getInstance(cursor);
 				try {
 					Files.walkFileTree(path, visitor);

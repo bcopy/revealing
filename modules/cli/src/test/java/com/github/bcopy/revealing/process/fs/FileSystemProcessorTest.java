@@ -1,6 +1,7 @@
 package com.github.bcopy.revealing.process.fs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -10,20 +11,53 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.Cursor;
+import com.github.bcopy.revealing.process.fs.exif.ExifMetadataVisitorFactory;
+import com.github.bcopy.revealing.process.fs.simple.SimpleFileSystemVisitorFactory;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 
 class FileSystemProcessorTest {
 
 	@Test
-	void testSimpleFilesystem() throws IOException {
+	void testSimpleFilesystemProcessor() throws IOException {
+		Path rootPath = initializeTestFileSystem();
+		
+	    FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new SimpleFileSystemVisitorFactory()));
+		Cursor c = new Cursor();
+		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
+		
+		assertEquals(5, slideshow.getCategories().size());
+		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		
+		assertTrue(redItem != null);
+		assertNull(redItem.getCaption());
+	}
+
+	@Test
+	void testExifFilesystemProcessor() throws IOException {
+		Path rootPath = initializeTestFileSystem();
+		
+	    FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new ExifMetadataVisitorFactory()));
+		Cursor c = new Cursor();
+		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
+		
+		assertEquals(5, slideshow.getCategories().size());
+		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		
+		assertTrue(redItem != null);
+		assertEquals("Red", redItem.getCaption());
+		
+	}
+
+
+	
+	private static final Path initializeTestFileSystem() throws IOException {
 		FileSystem fs = Jimfs.newFileSystem(Configuration.unix());
 		
 	    Path rootPath = fs.getPath("/home", "user1", "slideshows");
@@ -41,17 +75,7 @@ class FileSystemProcessorTest {
 				}
 			});
 		}
-		
-		FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new ExifMetadataVisitorFactory()));
-		Cursor c = new Cursor();
-		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
-		
-		assertEquals(5, slideshow.getCategories().size());
-		Optional<Item> redItem = slideshow.getCategories().get(0).getItems().stream().filter(item -> item.getTitle().equals("Red1")).findFirst();
-		
-		assertTrue(redItem.isPresent());
-		assertEquals("Red", redItem.get().getCaption());
-	    
+		return rootPath;
 	}
 	
 

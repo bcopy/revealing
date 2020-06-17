@@ -1,7 +1,7 @@
 package com.github.bcopy.revealing.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
@@ -14,5 +14,13 @@ public class Slideshow {
 	String id = UUID.randomUUID().toString();
 	String name;
 
-	List<Category> categories = new ArrayList<>();
+	Map<String, Category> categories = new HashMap<>();
+
+	public Category getOrCreateCategoryByName(String name) {
+		return categories.computeIfAbsent(name, key -> {
+			Category category = new Category();
+			category.setTitle(name);
+			return category;
+		});
+	}
 }

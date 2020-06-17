@@ -1,8 +1,5 @@
 package com.github.bcopy.revealing.process;
 
-import java.util.Map;
-
-import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,7 +14,7 @@ public class ProcessorAutoConfiguration implements ApplicationContextAware {
    ApplicationContext applicationContext;
    
    @Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
    
