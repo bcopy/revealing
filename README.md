@@ -1,6 +1,7 @@
 # Revealing
 
 [![Build Status](https://github.com/bcopy/revealing/workflows/Maven%20CI/badge.svg)](https://github.com/bcopy/revealing/actions)
+[![](https://jitpack.io/v/bcopy/revealing.svg)](https://jitpack.io/#bcopy/revealing)
 [![Java 11](https://img.shields.io/badge/Java-11-purple "Java 11")](https://java.com)
 
 <p align="center">
