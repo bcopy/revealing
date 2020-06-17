@@ -22,7 +22,8 @@ class ProcessorAutoConfigurationTest {
 	@Test
 	@DirtiesContext
 	void testDefaultVisitors() {
-		assertTrue(applicationContext.containsBean("exifMetadataVisitor"));
+		assertTrue(applicationContext.containsBean("simpleFileSystemVisitorFactory"));
+		assertTrue(applicationContext.containsBean("exifMetadataVisitorFactory"));
 	}
 	
 }

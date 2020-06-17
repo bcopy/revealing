@@ -6,17 +6,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.github.bcopy.revealing.process.Cursor;
 import com.github.bcopy.revealing.process.Processor;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class FileSystemProcessor implements Processor<Path> {
 	
 	List<FileVisitorFactory<AbstractFileVisitor>> visitorFactories;
 	
-	public FileSystemProcessor(List<FileVisitorFactory<AbstractFileVisitor>> visitorFactories) {
+	public FileSystemProcessor(@Autowired List<FileVisitorFactory<AbstractFileVisitor>> visitorFactories) {
 		this.visitorFactories = visitorFactories;
 	}
 	

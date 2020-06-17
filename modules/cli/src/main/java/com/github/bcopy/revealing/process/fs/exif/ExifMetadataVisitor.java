@@ -36,15 +36,7 @@ public class ExifMetadataVisitor extends AbstractFileVisitor {
 
 	@Override
 	public FileVisitResult onNewItem(Item i, Path path, BasicFileAttributes fileAttr) {
-		
-			i.setTitle(Utils.capitalizeString(path.getFileName().toString().replaceFirst("[.][^.]+$", "").replace("_", " ")));
-			i.setAbsolutePath(path.toString());
-			i.setRelativePath(path.getFileName().toString());
-			i.setCreated(fileAttr.creationTime().toMillis());
-			i.setModified(fileAttr.lastModifiedTime().toMillis());
-
 			extractExifMetadata(path, i);
-
 		return FileVisitResult.CONTINUE;
 	}
 

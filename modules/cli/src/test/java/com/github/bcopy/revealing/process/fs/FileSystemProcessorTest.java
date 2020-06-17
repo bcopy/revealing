@@ -1,6 +1,7 @@
 package com.github.bcopy.revealing.process.fs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -52,9 +53,27 @@ class FileSystemProcessorTest {
 		
 		assertTrue(redItem != null);
 		assertEquals("Red", redItem.getCaption());
+		assertNull(redItem.getModified());
 		
 	}
 
+	@Test
+	void testMultipassProcessing() throws IOException {
+		Path rootPath = initializeTestFileSystem();
+		
+	    FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new SimpleFileSystemVisitorFactory(), new ExifMetadataVisitorFactory()));
+		Cursor c = new Cursor();
+		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
+		
+		assertEquals(5, slideshow.getCategories().size());
+		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		
+		assertTrue(redItem != null);
+		assertEquals("Red", redItem.getCaption());
+		// Thanks to the simple file system visitor, the modification date should be available
+		assertNotNull(redItem.getModified());
+		
+	}
 
 	
 	private static final Path initializeTestFileSystem() throws IOException {

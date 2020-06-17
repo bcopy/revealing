@@ -6,9 +6,12 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+import com.github.bcopy.revealing.model.Slideshow;
+import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
+import com.github.bcopy.revealing.process.fs.FileSystemProcessor;
+import com.github.bcopy.revealing.process.fs.FileVisitorFactory;
+
 public class ProcessorService {
 	
 	FileSystem filesystem;
@@ -17,9 +20,10 @@ public class ProcessorService {
 	ProcessorConfigurationProperties configuration;
 	
 	@Autowired
-	private List<Processor<Path>> pathProcessors;
+	FileSystemProcessor fileSystemProcessor;
 	
-	public Cursor processPaths() {
+	
+	public List<Slideshow> processConfiguredPaths() {
 		Cursor cursor = new Cursor();
 		for(String pathString : configuration.getContentPaths()) {
 			Path path;
@@ -28,11 +32,9 @@ public class ProcessorService {
 			}else {
 				path = Paths.get(pathString);
 			}
-			for(Processor<Path> processor : pathProcessors) {
-				processor.process(cursor, path);
-			}
+			fileSystemProcessor.process(cursor, path);
 		}
-		return cursor;
+		return cursor.getSlideshows();
 	}
 	
 }

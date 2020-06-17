@@ -1,6 +1,7 @@
 package com.github.bcopy.revealing.process;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,8 @@ class ProcessorAutoConfigurationNoExifTest {
 	@Test
 	@DirtiesContext
 	void testExifDisabled() {
-		assertFalse(applicationContext.containsBean("exifMetadataVisitor"));
+		assertTrue(applicationContext.containsBean("simpleFileSystemVisitorFactory"));
+		assertFalse(applicationContext.containsBean("exifMetadataVisitorFactory"));
 	}
 
 }
