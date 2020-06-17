@@ -8,9 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.bcopy.revealing.model.Slideshow;
-import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
 import com.github.bcopy.revealing.process.fs.FileSystemProcessor;
-import com.github.bcopy.revealing.process.fs.FileVisitorFactory;
 
 public class ProcessorService {
 	
