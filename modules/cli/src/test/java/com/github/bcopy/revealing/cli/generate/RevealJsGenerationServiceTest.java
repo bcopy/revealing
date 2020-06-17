@@ -16,7 +16,6 @@ import com.github.bcopy.revealing.model.Cursor;
 import com.google.common.jimfs.Jimfs;
 
 import de.neuland.jade4j.JadeConfiguration;
-import de.neuland.jade4j.template.ClasspathTemplateLoader;
 
 class RevealJsGenerationServiceTest {
 

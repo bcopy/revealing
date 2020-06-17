@@ -21,7 +21,6 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.process.fs.AbstractFileVisitor;
-import com.github.bcopy.revealing.process.fs.Utils;
 
 import lombok.extern.slf4j.Slf4j;
 
