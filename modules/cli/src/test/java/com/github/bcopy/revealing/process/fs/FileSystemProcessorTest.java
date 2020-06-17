@@ -15,9 +15,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
-import com.github.bcopy.revealing.process.Cursor;
 import com.github.bcopy.revealing.process.fs.exif.ExifMetadataVisitorFactory;
 import com.github.bcopy.revealing.process.fs.simple.SimpleFileSystemVisitorFactory;
 import com.google.common.jimfs.Configuration;
@@ -34,7 +34,7 @@ class FileSystemProcessorTest {
 		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
 		
 		assertEquals(5, slideshow.getCategories().size());
-		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		Item redItem = slideshow.getCategoriesMap().get("slideshow1").getItemsMap().get("Red1");
 		
 		assertTrue(redItem != null);
 		assertNull(redItem.getCaption());
@@ -49,7 +49,7 @@ class FileSystemProcessorTest {
 		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
 		
 		assertEquals(5, slideshow.getCategories().size());
-		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		Item redItem = slideshow.getCategoriesMap().get("slideshow1").getItemsMap().get("Red1");
 		
 		assertTrue(redItem != null);
 		assertEquals("Red", redItem.getCaption());
@@ -66,7 +66,7 @@ class FileSystemProcessorTest {
 		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
 		
 		assertEquals(5, slideshow.getCategories().size());
-		Item redItem = slideshow.getCategories().get("slideshow1").getItems().get("Red1");
+		Item redItem = slideshow.getCategoriesMap().get("slideshow1").getItemsMap().get("Red1");
 		
 		assertTrue(redItem != null);
 		assertEquals("Red", redItem.getCaption());
@@ -88,7 +88,7 @@ class FileSystemProcessorTest {
 			final int index = i;
 			Arrays.asList("blue","red","white","black").stream().forEach(color ->{
 				try {
-					Files.copy(FileSystemProcessorTest.class.getResourceAsStream("/"+color+".jpg"), path.resolve(color+index+".jpg"), StandardCopyOption.REPLACE_EXISTING);
+					Files.copy(FileSystemProcessorTest.class.getResourceAsStream("/test-images/"+color+".jpg"), path.resolve(color+index+".jpg"), StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e) {
 					fail("Could not copy test image "+color);
 				}
