@@ -16,6 +16,8 @@ public class Category {
 	String title;
 	Long created;
 	Long modified;
+	
+	Boolean displayed;
 
 	Category parent;
 

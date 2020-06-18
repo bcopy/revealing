@@ -18,6 +18,8 @@ public class Item {
 
 	Long created;
 	Long modified;
+	
+	Boolean displayed;
 
 	String creator;
 	String modificator;
