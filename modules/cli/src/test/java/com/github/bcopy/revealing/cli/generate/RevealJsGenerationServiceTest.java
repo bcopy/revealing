@@ -33,7 +33,7 @@ class RevealJsGenerationServiceTest {
 		RevealJsGenerationService service = new RevealJsGenerationService(configuration);
 		Path outputPath = fs.getPath("/tmp", "output");
 	    Files.createDirectories(outputPath);
-		URL templateResource = RevealJsGenerationServiceTest.class.getResource("/test-resource-packages/photo-gallery/index.jade");
+		URL templateResource = RevealJsGenerationServiceTest.class.getResource("/test-templates/photo-gallery/index.jade");
 		service.persistSlideshows(outputPath, Paths.get(templateResource.toURI()), c.getCurrentSlideshow());
 		
 		Path outputIndexFile = outputPath.resolve(c.getCurrentSlideshow().getName()).resolve("index.html");
