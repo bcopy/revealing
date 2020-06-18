@@ -20,7 +20,6 @@ import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.fs.exif.ExifMetadataVisitorFactory;
 import com.github.bcopy.revealing.process.fs.simple.SimpleFileSystemVisitorFactory;
-import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 
 class FileSystemProcessorTest {
