@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.github.bcopy.revealing.cli.generate.RevealJsGenerationService;
 
-import de.neuland.jade4j.JadeConfiguration;
-
 @Configuration
 public class CliConfiguration {
 
@@ -18,17 +16,7 @@ public class CliConfiguration {
     }
     
     @Bean
-    JadeConfiguration jadeConfiguration(CliConfigurationProperties properties) {
-        JadeConfiguration jadeConfiguration = new JadeConfiguration();
-        jadeConfiguration.setPrettyPrint(properties.getPrettyPrint());
-        
-        return jadeConfiguration;
-    }
-    
-    @Bean
-    RevealJsGenerationService generationService(CliConfigurationProperties properties, JadeConfiguration jadeConfiguration) {
-        RevealJsGenerationService service = new RevealJsGenerationService(jadeConfiguration);
-        
-        return service;
+    RevealJsGenerationService generationService() {
+        return new RevealJsGenerationService();
     }
 }
