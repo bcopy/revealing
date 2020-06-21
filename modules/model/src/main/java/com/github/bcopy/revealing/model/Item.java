@@ -1,5 +1,6 @@
 package com.github.bcopy.revealing.model;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
@@ -23,5 +24,8 @@ public class Item {
 
 	String creator;
 	String modificator;
+	
+	Map<String, String> metadata;
+	
 
 }

@@ -20,6 +20,8 @@ public class Slideshow {
 	
 	List<Category> categories = new ArrayList<>();
 
+	Map<String, String> metadata;
+	
 	public Category getOrCreateCategoryByName(String name) {
 		return categoriesMap.computeIfAbsent(name, key -> {
 			Category category = new Category();

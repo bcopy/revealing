@@ -25,6 +25,7 @@ public class Category {
 	
 	List<Item> items = new ArrayList<>();
 	
+	Map<String, String> metadata;
 
 	public Item getOrCreateItemByName(String name) {
 		return itemsMap.computeIfAbsent(name, key -> {
