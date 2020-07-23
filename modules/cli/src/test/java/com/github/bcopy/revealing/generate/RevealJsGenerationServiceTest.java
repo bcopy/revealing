@@ -4,16 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import com.github.bcopy.revealing.generate.GenerationConfigurationProperties;
-import com.github.bcopy.revealing.generate.RevealJsGenerationService;
 import com.github.bcopy.revealing.model.Cursor;
 import com.google.common.jimfs.Jimfs;
 
