@@ -22,6 +22,8 @@ public class Slideshow {
 
 	Map<String, String> metadata;
 	
+	String template;
+	
 	public Category getOrCreateCategoryByName(String name) {
 		return categoriesMap.computeIfAbsent(name, key -> {
 			Category category = new Category();

@@ -1,0 +1,4 @@
+revealing.cli:
+  template: test-templates/photo-gallery/index.jade
+  locator: CLASSPATH
+  destination: target/output

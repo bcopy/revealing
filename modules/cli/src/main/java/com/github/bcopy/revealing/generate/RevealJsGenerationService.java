@@ -1,4 +1,4 @@
-package com.github.bcopy.revealing.cli.generate;
+package com.github.bcopy.revealing.generate;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.github.bcopy.revealing.model.Slideshow;
 
@@ -24,13 +25,17 @@ public class RevealJsGenerationService {
 	@Autowired
 	private GenerationConfigurationProperties properties;
 
-	public void persistSlideshows(Path persistenceRootPath, String templateName, Slideshow... slideshows)
+	public void persistSlideshows(Path persistenceRootPath, Slideshow... slideshows)
 			throws IOException {
-		JadeTemplate template = getJadeConfiguration().getTemplate(templateName);
+		JadeTemplate defaultTemplate = getJadeConfiguration().getTemplate(properties.getTemplate());
 
 		for (Slideshow slideshow : slideshows) {
 			Map<String, Object> model = new HashMap<>();
 			model.put("slideshow", slideshow);
+			JadeTemplate template = defaultTemplate;
+			if(! StringUtils.isEmpty(slideshow.getTemplate())) {
+				template = getJadeConfiguration().getTemplate(slideshow.getTemplate());
+			}
 			String slideshowHtml = getJadeConfiguration().renderTemplate(template, model);
 
 			Path destinationPath = persistenceRootPath.resolve(slideshow.getName());

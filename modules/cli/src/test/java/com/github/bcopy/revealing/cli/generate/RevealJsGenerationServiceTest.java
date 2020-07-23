@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.bcopy.revealing.generate.GenerationConfigurationProperties;
+import com.github.bcopy.revealing.generate.RevealJsGenerationService;
 import com.github.bcopy.revealing.model.Cursor;
 import com.google.common.jimfs.Jimfs;
 
@@ -33,9 +35,14 @@ class RevealJsGenerationServiceTest {
 		c.getCurrentItem().setCaption("item 1");
 		RevealJsGenerationService service = new RevealJsGenerationService();
 		service.setJadeConfiguration(configuration);
+		service.setProperties(
+				GenerationConfigurationProperties
+				   .builder()
+				   .template("test-templates/photo-gallery/index.jade")
+				   .build());
 		Path outputPath = fs.getPath("/tmp", "output");
 	    Files.createDirectories(outputPath);
-		service.persistSlideshows(outputPath, "test-templates/photo-gallery/index.jade", c.getCurrentSlideshow());
+		service.persistSlideshows(outputPath, c.getCurrentSlideshow());
 		
 		Path outputIndexFile = outputPath.resolve(c.getCurrentSlideshow().getName()).resolve("index.html");
 		assertTrue(Files.exists(outputIndexFile));

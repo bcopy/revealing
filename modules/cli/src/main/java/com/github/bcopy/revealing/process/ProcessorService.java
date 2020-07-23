@@ -6,11 +6,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.fs.FileSystemProcessor;
 
+@Component
 public class ProcessorService {
 	
 	FileSystem filesystem;
