@@ -16,6 +16,7 @@ import com.github.bcopy.revealing.model.Cursor;
 import com.google.common.jimfs.Jimfs;
 
 import de.neuland.jade4j.JadeConfiguration;
+import de.neuland.jade4j.template.ClasspathTemplateLoader;
 
 class RevealJsGenerationServiceTest {
 
@@ -23,18 +24,18 @@ class RevealJsGenerationServiceTest {
 	void testSimpleGallery() throws IOException, URISyntaxException {
 		FileSystem fs = Jimfs.newFileSystem();
 		JadeConfiguration configuration = new JadeConfiguration();
-//		configuration.setTemplateLoader(new ClasspathTemplateLoader());
+		configuration.setTemplateLoader(new ClasspathTemplateLoader());
 		
 		Cursor c = new Cursor();
 		c.setOrCreateSlideshow("Slideshow1").setOrCreateCategoryInCurrentSlideshow("Category1");
 		c.setOrCreateItemInCurrentCategory("Item1");
 		c.getCurrentItem().setRelativePath("photos/item1.jpg");
 		c.getCurrentItem().setCaption("item 1");
-		RevealJsGenerationService service = new RevealJsGenerationService(configuration);
+		RevealJsGenerationService service = new RevealJsGenerationService();
+		service.setJadeConfiguration(configuration);
 		Path outputPath = fs.getPath("/tmp", "output");
 	    Files.createDirectories(outputPath);
-		URL templateResource = RevealJsGenerationServiceTest.class.getResource("/test-templates/photo-gallery/index.jade");
-		service.persistSlideshows(outputPath, Paths.get(templateResource.toURI()), c.getCurrentSlideshow());
+		service.persistSlideshows(outputPath, "test-templates/photo-gallery/index.jade", c.getCurrentSlideshow());
 		
 		Path outputIndexFile = outputPath.resolve(c.getCurrentSlideshow().getName()).resolve("index.html");
 		assertTrue(Files.exists(outputIndexFile));
