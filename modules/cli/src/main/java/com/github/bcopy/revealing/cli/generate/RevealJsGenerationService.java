@@ -19,19 +19,16 @@ import de.neuland.jade4j.template.JadeTemplate;
 public class RevealJsGenerationService {
 
 	@Autowired
-	private
-	JadeConfiguration jadeConfiguration;
-	
-	
+	private JadeConfiguration jadeConfiguration;
+
 	@Autowired
-	private
-	GenerationConfigurationProperties properties;
-	
-	
-	public void persistSlideshows(Path persistenceRootPath, String templateName, Slideshow... slideshows) throws IOException {
+	private GenerationConfigurationProperties properties;
+
+	public void persistSlideshows(Path persistenceRootPath, String templateName, Slideshow... slideshows)
+			throws IOException {
 		JadeTemplate template = getJadeConfiguration().getTemplate(templateName);
-		
-		for(Slideshow slideshow : slideshows) {
+
+		for (Slideshow slideshow : slideshows) {
 			Map<String, Object> model = new HashMap<>();
 			model.put("slideshow", slideshow);
 			String slideshowHtml = getJadeConfiguration().renderTemplate(template, model);
@@ -39,27 +36,23 @@ public class RevealJsGenerationService {
 			Path destinationPath = persistenceRootPath.resolve(slideshow.getName());
 			Files.createDirectories(destinationPath);
 			Path outputPath = destinationPath.resolve("index.html");
-			
+
 			Files.createFile(outputPath);
 			Files.writeString(outputPath, slideshowHtml, StandardCharsets.UTF_8);
 		}
 	}
 
-
 	public JadeConfiguration getJadeConfiguration() {
 		return jadeConfiguration;
 	}
-
 
 	public void setJadeConfiguration(JadeConfiguration jadeConfiguration) {
 		this.jadeConfiguration = jadeConfiguration;
 	}
 
-
 	public GenerationConfigurationProperties getProperties() {
 		return properties;
 	}
-
 
 	public void setProperties(GenerationConfigurationProperties properties) {
 		this.properties = properties;
