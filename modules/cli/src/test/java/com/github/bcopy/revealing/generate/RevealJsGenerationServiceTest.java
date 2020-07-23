@@ -1,4 +1,4 @@
-package com.github.bcopy.revealing.cli.generate;
+package com.github.bcopy.revealing.generate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
