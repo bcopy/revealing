@@ -8,10 +8,10 @@
 <img alt="Revealing logo" src="revealing.png">
 </p>
 
-A full screen presentation facility, based on reveal.js.
+## A full screen presentation facility, based on Reveal.js.
 
 Uses :
-* The fantastic [reveal.js](https://revealjs.com/) presentation framework and its awesome community.
+* The fantastic [Reveal.js](https://revealjs.com/) presentation framework and its awesome community.
 * The spectacular [rclone](https://rclone.org/) for cloud synchronization.
 * The daring [Google JIMFS](https://github.com/google/jimfs) for file system unit testing.
 * The splendid [Chilipie kiosk](https://github.com/futurice/chilipie-kiosk) to run in Kiosk mode on a Raspberry Pi.
