@@ -20,6 +20,7 @@ import com.github.bcopy.revealing.model.Item;
 import com.github.bcopy.revealing.model.Slideshow;
 import com.github.bcopy.revealing.process.fs.exif.ExifMetadataVisitorFactory;
 import com.github.bcopy.revealing.process.fs.simple.SimpleFileSystemVisitorFactory;
+import com.github.bcopy.revealing.process.fs.url.URLMetadataVisitorFactory;
 import com.google.common.jimfs.Jimfs;
 
 class FileSystemProcessorTest {
@@ -54,6 +55,17 @@ class FileSystemProcessorTest {
 		assertEquals("Red", redItem.getCaption());
 		assertNull(redItem.getModified());
 		
+	}
+	
+	@Test
+	void testUrlFilesystemProcessor() throws IOException {
+		Path rootPath = initializeTestFileSystem();
+
+		FileSystemProcessor fsp = new FileSystemProcessor(Arrays.asList(new URLMetadataVisitorFactory()));
+		Cursor c = new Cursor();
+		Slideshow slideshow = fsp.process(c, rootPath).getSlideshows().get(0);
+		Item item = slideshow.getCategoriesMap().get("slideshow1").getItemsMap().get("Gallery");
+		assertEquals("http://galle.ry/gallery", item.getMetadata().get("url"));
 	}
 
 	@Test
@@ -92,6 +104,7 @@ class FileSystemProcessorTest {
 					fail("Could not copy test image "+color);
 				}
 			});
+			Files.copy(FileSystemProcessorTest.class.getResourceAsStream("/test-images/gallery.url"), path.resolve("gallery.url"), StandardCopyOption.REPLACE_EXISTING);
 		}
 		return rootPath;
 	}

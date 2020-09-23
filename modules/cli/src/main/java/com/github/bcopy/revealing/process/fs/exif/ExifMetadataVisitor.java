@@ -30,13 +30,23 @@ public class ExifMetadataVisitor extends AbstractFileVisitor {
 	public ExifMetadataVisitor(Cursor cursor) {
 		super(cursor);
 	}
+	
+	
 
 	Iterable<JpegSegmentMetadataReader> metadataReaders = Arrays.asList(new ExifReader());
 
 	@Override
 	public FileVisitResult onNewItem(Item i, Path path, BasicFileAttributes fileAttr) {
-			extractExifMetadata(path, i);
+	    extractExifMetadata(path, i);
 		return FileVisitResult.CONTINUE;
+	}
+	
+	@Override
+	public FileVisitResult acceptNewItem(Path path, BasicFileAttributes fileAttr, String title, String mimeType) {
+		if(Arrays.asList("image/svg+xml", "image/gif", "image/png","image/jpeg").contains(mimeType)){
+			return FileVisitResult.CONTINUE;
+		}
+		return FileVisitResult.TERMINATE;
 	}
 
 	protected void extractExifMetadata(Path path, Item i) {

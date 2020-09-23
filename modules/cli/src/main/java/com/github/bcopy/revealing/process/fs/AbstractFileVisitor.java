@@ -5,6 +5,9 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Optional;
+
+import org.apache.tika.Tika;
 
 import com.github.bcopy.revealing.model.Category;
 import com.github.bcopy.revealing.model.Cursor;
@@ -17,9 +20,13 @@ public abstract class AbstractFileVisitor implements FileVisitor<Path>, CursorEv
 	
 	private Cursor cursor;
 	
+	
+	private static final Tika tika = new Tika();
+	
 	public AbstractFileVisitor(Cursor cursor) {
 		this.cursor = cursor;
 	}
+	
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path path, IOException arg1) throws IOException {
@@ -40,17 +47,35 @@ public abstract class AbstractFileVisitor implements FileVisitor<Path>, CursorEv
 
 		return FileVisitResult.CONTINUE;
 	}
+	
+	/**
+	 * Indicates whether the file visitor will accept the incoming file for processing.
+	 * If accepted, a new Item will be created.
+	 * @param path
+	 * @param fileAttr
+	 * @param title
+	 * @param mimeType
+	 * @return <code>FileVisitResult.CONTINUE</code> if the incoming item is accepted for processing,
+	 *         <code>FileVisitResult.
+	 */
+	public abstract FileVisitResult acceptNewItem(Path path, BasicFileAttributes fileAttr, String title, String mimeType);
 
 	@Override
 	public FileVisitResult visitFile(Path path, BasicFileAttributes fileAttr) throws IOException {
 		if (fileAttr.isRegularFile()) {
 			// Create a new item
 			String title = Utils.capitalizeString(path.getFileName().toString().replaceFirst("[.][^.]+$", "").replace("_", " "));
-			cursor.setOrCreateItemInCurrentCategory(title);
-
-			onNewItem(cursor.getCurrentItem(), path, fileAttr);
+			String mimeType = tika.detect(path);
+			FileVisitResult accept = acceptNewItem(path, fileAttr, title, mimeType);
+			
+			if(accept == FileVisitResult.CONTINUE) {
+				cursor.setOrCreateItemInCurrentCategory(title);
+				cursor.getCurrentItem().setMimeType(mimeType);
+				onNewItem(cursor.getCurrentItem(), path, fileAttr);
+			}
 		}
 
+		
 		return FileVisitResult.CONTINUE;
 	}
 
@@ -75,5 +100,11 @@ public abstract class AbstractFileVisitor implements FileVisitor<Path>, CursorEv
 
 	public Cursor getCursor() {
 		return cursor;
+	}
+	
+	public final static Optional<String> getExtensionByStringHandling(String filename) {
+	    return Optional.ofNullable(filename)
+	      .filter(f -> f.contains("."))
+	      .map(f -> f.substring(filename.lastIndexOf(".") + 1));
 	}
   }

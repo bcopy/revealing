@@ -13,6 +13,8 @@ public class Item {
 	String id = UUID.randomUUID().toString();
 	String title;
 	String caption;
+	
+	String description;
 
 	String absolutePath;
 	String relativePath;
@@ -27,5 +29,5 @@ public class Item {
 	
 	Map<String, String> metadata;
 	
-
+	String mimeType;
 }
