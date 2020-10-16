@@ -1,5 +1,6 @@
 package com.github.bcopy.revealing.process.fs.url;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -8,6 +9,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import org.ini4j.Ini;
 
 import com.github.bcopy.revealing.model.Cursor;
 import com.github.bcopy.revealing.model.Item;
@@ -28,7 +31,17 @@ public class URLMetadataVisitor extends AbstractFileVisitor {
 		Map<String, String> metadata = new HashMap<>();
 		
 		try {
-			metadata.put("url", Files.readString(path));
+			Ini.Section section = new Ini(Files.newInputStream(path)).get("InternetShortcut");
+			if(section != null) {
+				String url = section.get("URL");
+				if(url != null) {
+				  metadata.put("url", url);
+				}
+			}
+			if(! metadata.containsKey("url") ) {
+				log.error("Could not extract URL value from file {}", path);
+			}
+			
 			item.setMetadata(metadata);
 		} catch (IOException e) {
 			log.error("Could not parse URL file {} : {}", path, e);
