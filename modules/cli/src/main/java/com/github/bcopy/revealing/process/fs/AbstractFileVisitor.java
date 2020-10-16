@@ -20,6 +20,8 @@ public abstract class AbstractFileVisitor implements FileVisitor<Path>, CursorEv
 	
 	private Cursor cursor;
 	
+	private VisitModeEnum visitMode = VisitModeEnum.RECURSIVE;
+	
 	
 	private static final Tika tika = new Tika();
 	
