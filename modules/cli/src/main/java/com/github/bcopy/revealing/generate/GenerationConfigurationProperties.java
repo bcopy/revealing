@@ -21,7 +21,7 @@ public class GenerationConfigurationProperties {
    String destination= "output/";
    
    @Builder.Default
-   Boolean prettyPrint = false;
+   Boolean prettyPrint = true;
    
    @Builder.Default
    String encoding = StandardCharsets.UTF_8.toString();

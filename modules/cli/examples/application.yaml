@@ -1,0 +1,10 @@
+revealing:
+  process:
+    visitors: [exif,url]
+    contentPaths:
+      - tv-screens/contents/LHC/LHC-1/PM15
+  generate:
+    template: responsive-slideshow/index.jade
+    locator: FILESYSTEM
+    templatePath: tv-screens/templates/
+
