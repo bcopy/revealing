@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +44,7 @@ public class RevealJsGenerationService {
 			Files.createDirectories(destinationPath);
 			Path outputPath = destinationPath.resolve("index.html");
 
-			Files.createFile(outputPath);
-			Files.writeString(outputPath, slideshowHtml, StandardCharsets.UTF_8);
+			Files.writeString(outputPath, slideshowHtml, StandardCharsets.UTF_8,StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING );
 		}
 	}
 
