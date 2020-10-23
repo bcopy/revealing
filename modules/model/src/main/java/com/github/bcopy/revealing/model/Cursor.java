@@ -53,6 +53,10 @@ public class Cursor {
    }
 
    public Item getOrCreateItemInCurrentCategoryByName(String name){
+	      if(currentCategory == null) {
+	    	  this.setOrCreateCategoryInCurrentSlideshow("main");
+	      }
+	   
 		  return currentCategory.getOrCreateItemByName(name);
 	   }
 	   
