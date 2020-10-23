@@ -8,16 +8,17 @@ import lombok.Data;
 @Data
 @Builder
 public class GenerationConfigurationProperties {
-   
-   String template;
+
+	String template;
    
    @Builder.Default
    String templatePath = "templates/";
    
    @Builder.Default
    TemplateLocatorEnum locator = TemplateLocatorEnum.CLASSPATH;
-      
-   String destination;
+   
+   @Builder.Default
+   String destination= "output/";
    
    @Builder.Default
    Boolean prettyPrint = false;
