@@ -40,7 +40,6 @@ public class FileSystemProcessor implements Processor<Path> {
 					log.error(e.getMessage(), e);
 				}
 			}
-			
 		}
 		
 		return cursor;
